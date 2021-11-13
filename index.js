@@ -49,6 +49,7 @@ async function run() {
         const reviewsCollection = database.collection('reviews')
         const ordersCollection = database.collection('orders')
         const usersCollection = database.collection('users')
+        const mostSellingCollection = database.collection('sellings')
 
         //GET API FOR ALL PRODUCTS
         app.get('/products', async (req, res) => {
@@ -81,6 +82,13 @@ async function run() {
             const review = req.body;
             const result = await reviewsCollection.insertOne(review)
             res.json(result);
+        })
+
+        //GET API  FRO BEST SELLING SMART PHONE
+        app.get('/sellings', async (req, res) => {
+            const cursor = mostSellingCollection.find({});
+            const selling = await cursor.toArray()
+            res.send(selling)
         })
 
 

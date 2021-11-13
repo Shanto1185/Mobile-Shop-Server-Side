@@ -50,7 +50,7 @@ async function run() {
         const ordersCollection = database.collection('orders')
         const usersCollection = database.collection('users')
 
-        //GET API 
+        //GET API FOR ALL PRODUCTS
         app.get('/products', async (req, res) => {
             const cursor = productsCollection.find({});
             const products = await cursor.toArray()

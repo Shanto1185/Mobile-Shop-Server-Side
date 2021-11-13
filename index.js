@@ -56,12 +56,25 @@ async function run() {
             const products = await cursor.toArray()
             res.send(products)
         })
+
+        //POST API FOR EXTRA ADDED PRODUCT
+        app.post('/products', async (req, res) => {
+            const product = req.body;
+            const result = await productsCollection.insertOne(product)
+            console.log(result)
+            res.json(result);
+        })
+
+
+
         //GET API FOR CUSTOMER REVIEW
         app.get('/reviews', async (req, res) => {
             const cursor = reviewsCollection.find({})
             const reviews = await cursor.toArray()
             res.send(reviews)
+
         })
+
 
         //POST API FOR EXTRA ADDED REVIEW
         app.post('/reviews', async (req, res) => {
@@ -79,8 +92,14 @@ async function run() {
             res.send(products)
         })
 
+        //GET API FOR ALL ORDERS
+        app.get('/orders', async (req, res) => {
+            const cursor = ordersCollection.find({});
+            const orders = await cursor.toArray();
+            res.send(orders)
+        })
 
-        //GET API FOR BOOKING ORDERS
+        //GET API FOR SPECIFIC BOOKING ORDERS
         app.get('/orders', async (req, res) => {
             const email = req.query.email;
             const query = { email: email }
@@ -95,6 +114,7 @@ async function run() {
             const result = await ordersCollection.insertOne(order);
             res.json(result);
         })
+
 
         //GET API FOR ADMIN
         app.get('/users/:email', async (req, res) => {
@@ -150,7 +170,6 @@ async function run() {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await ordersCollection.deleteOne(query);
-            console.log('hitted');
             res.json(result);
         });
 
